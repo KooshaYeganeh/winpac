@@ -7,6 +7,7 @@ import subprocess
 import hashlib
 import pefile
 from colorama import init, Fore
+import config
 
 # Define Quarantine directory
 Quarantine = os.path.join("Quarantine")
@@ -16,7 +17,7 @@ os.makedirs(Quarantine, exist_ok=True)
 init()
 
 # ClamAV scan path (make sure this matches the actual path of clamscan on your system)
-CLAMSCAN_PATH = r'C:\Program Files\ClamAV\clamscan.exe'  # Adjust as needed
+CLAMSCAN_PATH = config.SCANNER # Adjust as needed
 
 
 # Function to download file with a progress bar
@@ -136,7 +137,7 @@ if sys.argv[1] == "--install":
     if sys.argv[2] == "--normal":
         if len(sys.argv) >= 4 and sys.argv[3] == "notepad":
             print("Starting to download Notepad (normal version). Please wait...")
-            url = 'https://dl2.soft98.ir/soft/n/Notepad.8.7.5.x64.rar?1735198965'
+            url = config.notepad_url
             download_file(url, 'Notepad_8.7.5.x64.rar')
             # Scan downloaded file with ClamAV
             scan_with_clamav('Notepad_8.7.5.x64.rar')
@@ -147,7 +148,7 @@ if sys.argv[1] == "--install":
 
         elif len(sys.argv) >= 4 and sys.argv[3] == "winrar":
             print("Starting to download WinRAR (normal version). Please wait...")
-            url = 'https://dl2.soft98.ir/soft/w/WinRAR.7.01.exe?1735201498'
+            url = config.winrar_url
             download_file(url, 'WinRAR.7.01.exe')
             # Check File Signature and Scan with ClamAV
             check_file_signature('WinRAR.7.01.exe', '4d5a')
@@ -163,7 +164,7 @@ if sys.argv[1] == "--install":
     elif sys.argv[2] == "--portable":
         if len(sys.argv) >= 4 and sys.argv[3] == "notepad":
             print("Starting to download Notepad (portable version). Please wait...")
-            url = 'https://dl2.soft98.ir/soft/n/Notepad.8.6.7.Portable.rar?1735198990'
+            url = config.potable_notepad
             download_file(url, 'Notepad.8.6.7.Portable.rar')
             # Scan downloaded file with ClamAV
             scan_with_clamav('Notepad.8.6.7.Portable.rar')
@@ -174,7 +175,7 @@ if sys.argv[1] == "--install":
 
         elif len(sys.argv) >= 4 and sys.argv[3] == "winrar":
             print("Starting to download WinRAR (portable version). Please wait...")
-            url = 'https://dl2.soft98.ir/soft/w/WinRAR.7.0.Portable.zip?1735201526'
+            url = config.portable_winrar
             download_file(url, 'WinRAR.7.0.Portable.zip')
             # Scan downloaded file with ClamAV
             scan_with_clamav('WinRAR.7.0.Portable.zip')
